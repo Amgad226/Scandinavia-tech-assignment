@@ -8,8 +8,9 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:p": "nest start ms-event-publisher",
+    "start:r": "nest start ms-event-receiver-data-provider",
+    "start:api": "nest start ms-event-receiver-api",
     "p": "nest start --watch ms-event-publisher",
     "r": "nest start --watch ms-event-receiver-data-provider",
     "api": "nest start --watch ms-event-receiver-api",
