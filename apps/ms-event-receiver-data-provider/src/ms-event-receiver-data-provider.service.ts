@@ -1,4 +1,4 @@
-import { RabbitSubscribe } from 'scandinaviatech-test/node_modules/@golevelup/nestjs-rabbitmq';
+import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
 import { IPublishMessage } from 'libs/common/interfaces/publish-message.interface';
