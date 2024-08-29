@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/scandinaviatech-test/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "projects": {
+    "ms-event-publisher": {
+      "type": "application",
+      "root": "apps/ms-event-publisher",
+      "entryFile": "main",
+      "sourceRoot": "apps/ms-event-publisher/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/ms-event-publisher/tsconfig.app.json"
+      }
+    },
+    "ms-event-receiver-data-provider": {
+      "type": "application",
+      "root": "apps/ms-event-receiver-data-provider",
+      "entryFile": "main",
+      "sourceRoot": "apps/ms-event-receiver-data-provider/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/ms-event-receiver-data-provider/tsconfig.app.json"
+      }
+    },
+    "ms-event-receiver-api": {
+      "type": "application",
+      "root": "apps/ms-event-receiver-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/ms-event-receiver-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/ms-event-receiver-api/tsconfig.app.json"
+      }
+    }
+  }
+}
