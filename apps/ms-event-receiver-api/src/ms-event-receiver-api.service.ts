@@ -1,11 +1,19 @@
-import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
+import { AmqpConnection, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { Injectable, Logger } from '@nestjs/common';
+import { IPublishMessage } from 'libs/common/interfaces/publish-message.interface';
 
 @Injectable()
 export class MsEventReceiverApiService {
   private logger: Logger;
   constructor(private readonly amqpConnection: AmqpConnection) {
     this.logger = new Logger(MsEventReceiverApiService.name);
+  }
+  @RabbitSubscribe({
+    exchange: 'exchange1',
+    routingKey: 'routing.key',
+  })
+  public async consumeMessage(msg: IPublishMessage) {
+    this.logger.log(`Received message: ${JSON.stringify(msg)}`);
   }
   async requestRPC() {
     this.logger.debug('send RPC request');
