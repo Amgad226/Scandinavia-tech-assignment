@@ -1,12 +1,15 @@
 import { Module } from '@nestjs/common';
-import { MsEventPublisherController } from './ms-event-publisher.controller';
 import { MsEventPublisherService } from './ms-event-publisher.service';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { rabbitmqConfig } from 'libs/common/rabbitmq.config';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
-  imports: [RabbitMQModule.forRoot(RabbitMQModule, rabbitmqConfig)],
-  controllers: [MsEventPublisherController],
+  imports: [
+    ScheduleModule.forRoot(),
+    RabbitMQModule.forRoot(RabbitMQModule, rabbitmqConfig),
+  ],
+  controllers: [],
   providers: [MsEventPublisherService],
 })
 export class MsEventPublisherModule {}
