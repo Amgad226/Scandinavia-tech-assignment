@@ -1,6 +1,7 @@
 import { RabbitSubscribe } from 'scandinaviatech-test/node_modules/@golevelup/nestjs-rabbitmq';
 import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
+import { IPublishMessage } from 'libs/common/interfaces/publish-message.interface';
 
 @Injectable()
 export class MsEventReceiverDataProviderService {
@@ -12,7 +13,7 @@ export class MsEventReceiverDataProviderService {
     exchange: 'exchange1',
     routingKey: 'routing.key',
   })
-  public async consumeMessage(msg: any) {
+  public async consumeMessage(msg: IPublishMessage) {
     await this.prisma.event.create({
       data: {
         description: msg.description,
