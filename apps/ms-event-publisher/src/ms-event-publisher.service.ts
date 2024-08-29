@@ -1,4 +1,4 @@
-import { AmqpConnection } from 'scandinaviatech-test/node_modules/@golevelup/nestjs-rabbitmq';
+import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import { Injectable, Logger } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
 import { IPublishMessage } from '../../../libs/common/interfaces/publish-message.interface';
@@ -11,7 +11,7 @@ export class MsEventPublisherService {
     this.logger = new Logger(MsEventPublisherService.name);
   }
 
-  @Interval(5000)
+  @Interval(1000)
   async publishEvent() {
     try {
       this.counter++;
