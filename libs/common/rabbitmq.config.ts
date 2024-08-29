@@ -8,6 +8,8 @@ export const rabbitmqConfig: RabbitMQConfig = {
       type: 'topic',
     },
   ],
+  prefetchCount: 1, // Process one message at a time per worker instance
+  queues: [{ name: 'msgs', exchange: 'exchange1' }],
   uri:
     process.env.RABBIT_CONNECTION ?? 'amqp://username:password@localhost:5672',
   logger: new Logger('Rabbit'),
