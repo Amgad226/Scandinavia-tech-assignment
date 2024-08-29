@@ -10,7 +10,7 @@ export class MsEventPublisherService {
     this.logger = new Logger(MsEventPublisherService.name);
   }
 
-  @Interval(5000)
+  @Interval(1000)
   async publishEvent() {
     try {
       const message = {
@@ -23,7 +23,7 @@ export class MsEventPublisherService {
         'routing.key',
         message,
       );
-      this.logger.log(`Published message: ${JSON.stringify(message)}`);
+      this.logger.debug(`Published message: ${JSON.stringify(message)}`);
     } catch (error) {
       console.error('Error publishing message:', error);
     }
