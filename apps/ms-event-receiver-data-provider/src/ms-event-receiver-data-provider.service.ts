@@ -1,4 +1,4 @@
-import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
+import { RabbitSubscribe } from 'scandinaviatech-test/node_modules/@golevelup/nestjs-rabbitmq';
 import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MsEventReceiverDataProviderController } from './ms-event-receiver-data-provider.controller';
 import { MsEventReceiverDataProviderService } from './ms-event-receiver-data-provider.service';
-import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
+import { RabbitMQModule } from 'scandinaviatech-test/node_modules/@golevelup/nestjs-rabbitmq';
 import { rabbitmqConfig } from 'libs/common/rabbitmq.config';
 
 @Module({

@@ -1,0 +1,7 @@
+{
+    "name": "@scandinaviatech-test/ms-event-publisher",
+    "dependencies": {
+        "scandinaviatech-test": "0.0.1",
+        "@scandinaviatech-test/ms-event-publisher": "file:"
+    }
+}

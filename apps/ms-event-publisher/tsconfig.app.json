@@ -2,7 +2,11 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "declaration": false,
-    "outDir": "../../dist/apps/ms-event-publisher"
+    "outDir": "../../dist/apps/ms-event-publisher",
+    "paths": {
+      "@nestjs/*": ["node_modules/@nestjs/*"],
+      "@golevelup/*": ["scandinaviatech-test/node_modules/@golevelup/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
