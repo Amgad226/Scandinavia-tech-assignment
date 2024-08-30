@@ -1,12 +1,13 @@
 import { RabbitSubscribe, RabbitRPC } from '@golevelup/nestjs-rabbitmq';
 import { Injectable, Logger } from '@nestjs/common';
-import { PrismaService } from './prisma/prisma.service';
 import { IPublishMessage } from 'libs/common/interfaces/publish-message.interface';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class MsEventReceiverDataProviderService {
   private logger: Logger;
-  constructor(private readonly prisma: PrismaService) {
+  constructor(@InjectModel('Event') private readonly eventModel: Model<Event>) {
     this.logger = new Logger(MsEventReceiverDataProviderService.name);
   }
   @RabbitSubscribe({
@@ -14,13 +15,8 @@ export class MsEventReceiverDataProviderService {
     routingKey: 'routing.key',
   })
   public async consumeMessage(msg: IPublishMessage) {
-    await this.prisma.event.create({
-      data: {
-        description: msg.description,
-        name: msg.name,
-        counter: msg.counter,
-      },
-    });
+    const newEvent = new this.eventModel(msg);
+    newEvent.save();
     this.logger.log(`Received message: ${JSON.stringify(msg)}`);
   }
   @RabbitRPC({
@@ -28,10 +24,11 @@ export class MsEventReceiverDataProviderService {
     routingKey: 'rpc',
   })
   async fetchLast10Events() {
-    const events = await this.prisma.event.findMany({
-      orderBy: { createdAt: 'desc' },
-      take: 10,
-    });
+    const events = await this.eventModel
+      .find()
+      .sort({ createdAt: -1 })
+      .limit(10);
+
     this.logger.debug(`new RPC request`);
 
     return events;
