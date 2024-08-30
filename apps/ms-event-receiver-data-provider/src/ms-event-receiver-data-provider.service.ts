@@ -13,6 +13,10 @@ export class MsEventReceiverDataProviderService {
   @RabbitSubscribe({
     exchange: 'exchange1',
     routingKey: 'routing.key',
+    queue: 'msgs',
+    queueOptions: {
+      durable: true,
+    },
   })
   public async consumeMessage(msg: IPublishMessage) {
     const newEvent = new this.eventModel(msg);
