@@ -7,7 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import {
   EventSchema,
   Event,
-} from 'apps/ms-event-receiver-data-provider/schemas/event.schema';
+} from 'libs/common/schemas/event.schema';
 @Module({
   imports: [
     RabbitMQModule.forRoot(RabbitMQModule, rabbitmqConfig),

@@ -1,5 +1,6 @@
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import { Injectable, Logger } from '@nestjs/common';
+import { EventDocument } from 'libs/common/schemas/event.schema';
 
 @Injectable()
 export class EventService {
@@ -10,11 +11,11 @@ export class EventService {
 
   async requestRPC() {
     this.logger.debug('send RPC request');
-    const response = await this.amqpConnection.request<any>({
+    const events = await this.amqpConnection.request<EventDocument[]>({
       exchange: 'exchange1',
       routingKey: 'rpc',
       timeout: 10000,
     });
-    return response;
+    return events;
   }
 }

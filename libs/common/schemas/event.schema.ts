@@ -13,8 +13,7 @@ export class Event extends Document {
   @Prop({ required: true })
   description: string;
 
-  @Prop({ default: Date.now }) 
+  @Prop({ default: Date.now })
   createdAt: Date;
 }
-
 export const EventSchema = SchemaFactory.createForClass(Event);
