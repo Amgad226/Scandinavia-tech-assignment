@@ -6,7 +6,9 @@ import { EventSchema } from '../schemas/event.schema';
 import { MsEventReceiverDataProviderController } from './ms-event-receiver-data-provider.controller';
 import { MsEventReceiverDataProviderService } from './ms-event-receiver-data-provider.service';
 console.log(`RABBIT URI :${rabbitmqConfig.uri}`);
-console.log(`MONGO URI :${rabbitmqConfig.uri}`);
+console.log(
+  `MONGO URI :${process.env.MONGO_CONNECTION ?? 'mongodb://localhost:27017/events'}`,
+);
 
 @Module({
   imports: [

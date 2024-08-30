@@ -16,13 +16,29 @@ services:
       - backend
     ports:
       - 3001:3001
+    restart: unless-stopped
+
+  ms-event-publisher:
+    build:
+      context: .
+      args:
+        - APP=ms-event-publisher
+    container_name: ms-event-publisher
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+    networks:
+      - backend
+    ports:
+      - 3000:3000
+    restart: unless-stopped
 
   ms-event-receiver-data-provider:
     build:
       context: .
       args:
         - APP=ms-event-receiver-data-provider
-    # container_name: ms-data-provider
     env_file:
       - .env
     depends_on:
@@ -32,20 +48,7 @@ services:
       - backend
     ports:
       - 3002
-
-  ms-event-publisher:
-    container_name: ms-publish
-    build:
-      context: .
-      args:
-        - APP=ms-event-publisher
-    restart: always
-    env_file:
-      - .env
-    depends_on:
-      - rabbitmq
-    ports:
-      - 3000:3000
+    restart: unless-stopped
 
   rabbitmq:
     image: rabbitmq:3.13.7-management
@@ -58,7 +61,11 @@ services:
       - "8080:15672"
     networks:
       - backend
-
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
 
   mongo:
     image: mongo:7.0.14
