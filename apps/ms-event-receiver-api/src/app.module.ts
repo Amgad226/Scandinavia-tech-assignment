@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { EventReceiverApiModule } from './event-receiver-api/event-receiver-api.module';
+import { EventReceiverApiModule } from './event/event.module';
 
 @Module({
   imports: [EventReceiverApiModule],
