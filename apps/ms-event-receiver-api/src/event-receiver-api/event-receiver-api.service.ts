@@ -3,10 +3,10 @@ import { Injectable, Logger } from '@nestjs/common';
 import { IPublishMessage } from 'libs/common/interfaces/publish-message.interface';
 
 @Injectable()
-export class MsEventReceiverApiService {
+export class EventReceiverApiService {
   private logger: Logger;
   constructor(private readonly amqpConnection: AmqpConnection) {
-    this.logger = new Logger(MsEventReceiverApiService.name);
+    this.logger = new Logger(EventReceiverApiService.name);
   }
   @RabbitSubscribe({
     exchange: 'exchange1',
