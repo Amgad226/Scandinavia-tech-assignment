@@ -1,19 +1,16 @@
-# NestJS Microservices Project
+# Scandinavia tech Assignment
 
 ## Table of Contents
 
-- [NestJS Microservices Project](#nestjs-microservices-project)
-  - [Table of Contents](#table-of-contents)
   - [Project Overview](#project-overview)
-    - [Microservices Overview](#microservices-overview)
+  - [Microservices Overview](#microservices-overview)
   - [Plannging digram](#plannging-digram)
   - [Technologies Used](#technologies-used)
   - [Monorepo Structure](#monorepo-structure)
   - [Getting Started](#getting-started)
-        - [Prerequisites](#prerequisites)
-    - [Running the Project](#running-the-project)
-    - [Scaling Microservice 2](#scaling-microservice-2)
-    - [Notes](#notes)
+  - [Running the Project](#running-the-project)
+  - [Scaling Microservice 2](#scaling-microservice-2)
+  - [Notes](#notes)
 
 ## Project Overview
 
@@ -21,7 +18,9 @@ This project demonstrates a system of three microservices built with NestJS that
 
 ### Microservices Overview
 
-1. **Microservice 1 (Event Publisher)**: Publishes an event every second to a RabbitMQ broker with the following interface: `{ name: “name”, description: “description” }`. and i add counter attribute to note the difference between published events , the final interface is:
+1. **Microservice 1 (Event Publisher)**: Publishes an event every second to a RabbitMQ broker with the following interface: 
+`{ name: “name”, description: “description” }`.
+ and i add counter attribute to note the difference between published events , the final interface is:
 `{ name: “name”, description: “description” , “counter”:1  }`.
 
 2. **Microservice 2 (Event Receiver & Data Provider)**:
