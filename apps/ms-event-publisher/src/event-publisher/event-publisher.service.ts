@@ -1,22 +1,21 @@
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpException, Injectable, Logger } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
-import { IPublishMessage } from '../../../libs/common/interfaces/publish-message.interface';
+import { IPublishMessage } from 'libs/common/interfaces/publish-message.interface';
 
 @Injectable()
-export class MsEventPublisherService {
+export class EventPublisherService {
   private counter = 0;
   private logger: Logger;
   constructor(private readonly amqpConnection: AmqpConnection) {
-    this.logger = new Logger(MsEventPublisherService.name);
+    this.logger = new Logger(EventPublisherService.name);
   }
 
   @Interval(1000)
   async publishEvent() {
     try {
-      this.counter++;
       const message = {
-        counter: this.counter,
+        counter: this.counter++,
         name: 'name',
         description: 'desc',
         timestamp: new Date(),
@@ -28,7 +27,7 @@ export class MsEventPublisherService {
       );
       this.logger.log(`Published message: ${JSON.stringify(message)}`);
     } catch (error) {
-      console.error('Error publishing message:', error);
+      console.log('Error publishing message:');
     }
   }
 }
