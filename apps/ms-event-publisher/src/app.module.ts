@@ -1,10 +1,14 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { EventPublisherModule } from './event-publisher/event-publisher.module';
-import { APP_FILTER } from '@nestjs/core';
 
 @Module({
-  imports: [EventPublisherModule, ScheduleModule.forRoot()],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    EventPublisherModule,
+    ScheduleModule.forRoot(),
+  ],
   controllers: [],
   providers: [],
 })

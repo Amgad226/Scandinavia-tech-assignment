@@ -1,7 +1,7 @@
-import { RabbitMQConfig } from '@golevelup/nestjs-rabbitmq';
 import { Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
-export const rabbitmqConfig: RabbitMQConfig = {
+export const getRabbitMQConfig = (configService: ConfigService) => ({
   exchanges: [
     {
       name: 'exchange1',
@@ -10,7 +10,6 @@ export const rabbitmqConfig: RabbitMQConfig = {
   ],
   prefetchCount: 1, // Process one message at a time per worker instance
   queues: [{ name: 'msgs', exchange: 'exchange1' }],
-  uri:
-    process.env.RABBIT_CONNECTION ?? 'amqp://username:password@localhost:5672',
+  uri: configService.get<string>('RABBIT_CONNECTION'),
   logger: new Logger('Rabbit'),
-};
+});

@@ -1,12 +1,18 @@
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { Module } from '@nestjs/common';
-import { rabbitmqConfig } from 'libs/common/rabbitmq.config';
+import { ConfigService } from '@nestjs/config';
+import { getRabbitMQConfig } from 'libs/config/rabbitmq.config';
 import { EventPublisherService } from './event-publisher.service';
 
 @Module({
-  imports: [RabbitMQModule.forRoot(RabbitMQModule, rabbitmqConfig)],
+  imports: [
+    RabbitMQModule.forRootAsync(RabbitMQModule, {
+      useFactory: (configService: ConfigService) =>
+        getRabbitMQConfig(configService),
+      inject: [ConfigService],
+    }),
+  ],
   controllers: [],
   providers: [EventPublisherService],
-  exports: [EventPublisherService],
 })
 export class EventPublisherModule {}

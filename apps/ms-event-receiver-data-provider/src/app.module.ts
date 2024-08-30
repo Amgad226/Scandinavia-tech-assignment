@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { EventSchema } from '../../../libs/common/schemas/event.schema';
+import { ConfigModule } from '@nestjs/config';
 import { EventReceiverModule } from './event-receiver/event-receiver.module';
 
 @Module({
-  imports: [EventReceiverModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), , EventReceiverModule],
   controllers: [],
   providers: [],
 })

@@ -1,23 +1,29 @@
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { Module } from '@nestjs/common';
-import { rabbitmqConfig } from 'libs/common/rabbitmq.config';
+import { ConfigService } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Event, EventSchema } from 'libs/common/schemas/event.schema';
+import { getRabbitMQConfig } from 'libs/config/rabbitmq.config';
 import { EventReceiverService } from './event-receiver.service';
 import { EventRepository } from './repositories/event.repository';
-import { MongooseModule } from '@nestjs/mongoose';
-import {
-  EventSchema,
-  Event,
-} from 'libs/common/schemas/event.schema';
 @Module({
   imports: [
-    RabbitMQModule.forRoot(RabbitMQModule, rabbitmqConfig),
-    MongooseModule.forRoot(
-      process.env.MONGO_CONNECTION ?? 'mongodb://localhost:27017/events',
-    ),
+    RabbitMQModule.forRootAsync(RabbitMQModule, {
+      useFactory: (configService: ConfigService) =>
+        getRabbitMQConfig(configService),
+      inject: [ConfigService],
+    }),
+    ,
+    MongooseModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_CONNECTION'),
+      }),
+      inject: [ConfigService],
+    }),
     MongooseModule.forFeature([{ name: Event.name, schema: EventSchema }]),
   ],
   controllers: [],
   providers: [EventRepository, EventReceiverService],
-  exports: [EventRepository],
+  exports: [EventRepository], 
 })
 export class EventReceiverModule {}
