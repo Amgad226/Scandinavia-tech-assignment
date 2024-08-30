@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
-import { MsEventReceiverDataProviderModule } from './ms-event-receiver-data-provider.module';
+import { EventReceiverModule } from './event-receiver/event-receiver.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(MsEventReceiverDataProviderModule);
+  const app = await NestFactory.create(EventReceiverModule);
   await app.listen(3002);
 }
 bootstrap();

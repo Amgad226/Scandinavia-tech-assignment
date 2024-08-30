@@ -1,15 +1,20 @@
-import { Schema, Document } from 'mongoose';
+import { Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Document, HydratedDocument } from 'mongoose';
 
-export interface Event extends Document {
+export type EventDocument = HydratedDocument<Event>;
+
+export class Event extends Document {
+  @Prop({ required: true })
   name: string;
+
+  @Prop({ required: true })
   counter: number;
+
+  @Prop({ required: true })
   description: string;
+
+  @Prop({ default: Date.now }) 
   createdAt: Date;
 }
 
-export const EventSchema = new Schema<Event>({
-  name: { type: String, required: true },
-  counter: { type: Number, required: true },
-  description: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now }
-});
+export const EventSchema = SchemaFactory.createForClass(Event);
