@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Event } from 'libs/common/schemas/event.schema';
+import { Event } from 'apps/ms-event-receiver-data-provider/src/schemas/event.schema';
 import { IPublishMessage } from 'libs/common/interfaces/publish-message.interface';
 import { Model } from 'mongoose';
 
