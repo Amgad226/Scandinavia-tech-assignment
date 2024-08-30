@@ -2,7 +2,10 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Event, EventSchema } from 'apps/ms-event-receiver-data-provider/src/schemas/event.schema';
+import {
+  Event,
+  EventSchema,
+} from 'apps/ms-event-receiver-data-provider/src/schemas/event.schema';
 import { getRabbitMQConfig } from 'libs/config/rabbitmq.config';
 import { EventReceiverService } from './event-receiver.service';
 import { EventRepository } from './repositories/event.repository';
@@ -13,7 +16,6 @@ import { EventRepository } from './repositories/event.repository';
         getRabbitMQConfig(configService),
       inject: [ConfigService],
     }),
-    ,
     MongooseModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         uri: configService.get<string>('MONGO_CONNECTION'),
@@ -24,6 +26,6 @@ import { EventRepository } from './repositories/event.repository';
   ],
   controllers: [],
   providers: [EventRepository, EventReceiverService],
-  exports: [EventRepository], 
+  exports: [EventRepository],
 })
 export class EventReceiverModule {}
