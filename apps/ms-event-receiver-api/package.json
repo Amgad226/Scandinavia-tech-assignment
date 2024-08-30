@@ -2,7 +2,6 @@
     "name": "@scandinaviatech-test/ms-event-receiver-api",
     "version": "0.0.1",
     "dependencies": {
-        "scandinaviatech-test": "0.0.1",
         "@scandinaviatech-test/ms-event-receiver-api": "file:"
     }
 }

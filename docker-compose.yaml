@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  # ms-event-publisher:
+  #   container_name: ms-publish
+  #   build:
+  #     context: .
+  #     args:
+  #       - APP=ms-event-publisher
+  #   restart: always
+  #   depends_on:
+  #     - rabbitmq
+  #   ports:
+  #     - 3000:3000
+
+
+  # ms-event-receiver-api:
+  #   build:
+  #     context: .
+  #     args:
+  #       - APP=ms-event-receiver-api
+  #   container_name: ms-api
+  #   environment:
+  #     - NODE_ENV=production
+  #   depends_on:
+  #     - rabbitmq
+  #   networks:
+  #     - backend
+
+  ms-event-receiver-data-provider:
+    build:
+      context: .
+      dockerfile : db-Dockerfile
+      args:
+        - APP=ms-event-receiver-data-provider
+    container_name: ms-data-provider
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - rabbitmq
+      - mongo
+    networks:
+      - backend
+
+  rabbitmq:
+    image: rabbitmq:3.13.7-management
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: username
+      RABBITMQ_DEFAULT_PASS: password
+    ports:
+      - "5672:5672"
+      - "8080:15672"
+    networks:
+      - backend
+
+  mongo:
+    image: mongo:7.0.14
+    container_name: mongo
+    command: mongod --replSet rs0
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+    volumes:
+      - mongo-data:/data/db
+    entrypoint: |
+      bash -c "
+        sleep 10;
+        mongo --host mongo1:27017 <<EOF
+          rs.initiate({
+            _id: 'rs0',
+            members: [
+              { _id: 0, host: 'mongo1:27017' },
+            ]
+          });
+        EOF
+      "
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
