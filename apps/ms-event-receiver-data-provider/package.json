@@ -2,8 +2,9 @@
     "name": "@scandinaviatech-test/ms-event-receiver-data-provider",
     "version": "0.0.1",
     "dependencies": {
-        "@prisma/client": "^5.19.0",
+        "scandinaviatech-test": "0.0.1",
+        "@nestjs/mongoose": "^10.0.10",
         "@scandinaviatech-test/ms-event-receiver-data-provider": "file:",
-        "prisma": "^5.19.0"
+        "mongoose": "^8.6.0"
     }
 }
