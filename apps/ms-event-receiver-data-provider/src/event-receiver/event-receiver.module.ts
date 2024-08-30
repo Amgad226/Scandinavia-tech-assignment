@@ -16,12 +16,6 @@ import { EventRepository } from './repositories/event.repository';
         getRabbitMQConfig(configService),
       inject: [ConfigService],
     }),
-    MongooseModule.forRootAsync({
-      useFactory: (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGO_CONNECTION'),
-      }),
-      inject: [ConfigService],
-    }),
     MongooseModule.forFeature([{ name: Event.name, schema: EventSchema }]),
   ],
   controllers: [],
